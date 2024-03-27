@@ -3,6 +3,7 @@ import { registerSchema } from "@/schema"
 import * as z from "zod"
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { getUserByEmail } from "@/hooks";
 export const register = async (values: z.infer<typeof registerSchema>) => {
     const validated = registerSchema.safeParse(values);
     if (!validated.success) {
@@ -10,7 +11,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
     }
     const { email, password, name } = validated.data
     const hashedpassword = await bcrypt.hash(password, 10);
-    const checkuser = await db.user.findUnique({ where: { email } })
+    const checkuser = await getUserByEmail(email);
     if (checkuser) {
         return { error: "این ایمیل قبلا ثبت شده است" }
     }
