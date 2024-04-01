@@ -1,10 +1,12 @@
 import { auth, signOut } from '@/auth'
 import React from 'react'
 
-const page = () => {
+const page = async() => {
+   const session=await auth();
   return (
     <>
-      <div>HERE IS MY SETTING PAGE</div>
+  
+      <div>{JSON.stringify(session)}</div>
       <form action={async () => {
         "use server"
         await signOut();

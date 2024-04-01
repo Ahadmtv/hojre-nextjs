@@ -4,12 +4,18 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { loginSchema } from "./schema";
 import { getUserByEmail } from "./hooks";
 import bcrypt from "bcryptjs";
-export const authConfig = {
-  secret: process.env.AUTH_SECRET, // Set your own secret key here
-  // Other configuration options for NextAuth can be added here
-};
+import Github from "next-auth/providers/github"
+import Google from "next-auth/providers/google"
 export default {
   providers: [
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret:process.env.GITHUB_CLIENT_SECRET
+    }),
+    Google({
+      clientId:process.env.GOOGLE_CLIENT_ID,
+      clientSecret:process.env.GOOGLE_CLIENT_SECRET
+    }),
     CredentialsProvider({
       async authorize(credentials) {
         const validated = loginSchema.safeParse(credentials);
@@ -24,4 +30,5 @@ export default {
       }
     })
   ],
+  secret: process.env.AUTH_SECRET
 } satisfies NextAuthConfig
