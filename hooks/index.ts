@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
 
 
-export const getUserByEmail=async(email:string|undefined)=>{
+export const getUserByEmail = async (email: string | undefined) => {
     try {
-        const user=await db.user.findUnique({where: {email}})
+        const user = await db.user.findUnique({ where: { email } })
         return user
     }
     catch (error) {
@@ -11,10 +11,33 @@ export const getUserByEmail=async(email:string|undefined)=>{
     }
 }
 
-export const getUserById=async(id:string|undefined)=>{
+export const getUserById = async (id: string | undefined) => {
     try {
-        const user=await db.user.findUnique({where:{id}})
+        const user = await db.user.findUnique({ where: { id } })
         return user
+    } catch (error) {
+        return null
+    }
+}
+
+export const getTokenByEmail = async (email: string) => {
+    try {
+        const token = await db.verivicationToken.findFirst({
+            where: { email: email }
+        })
+        return token
+
+    } catch (error) {
+        return null
+    }
+}
+export const getTokenByToken = async (token: string) => {
+    try {
+        const verivicatedToken = await db.verivicationToken.findUnique({
+            where: { token: token }
+        })
+        return verivicatedToken
+
     } catch (error) {
         return null
     }

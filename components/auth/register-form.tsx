@@ -33,7 +33,7 @@ const RegisterForm = () => {
       name: ""
     }
   })
-  const handelSub = (values: z.infer<typeof registerSchema>) => {
+  const handelSub =(values: z.infer<typeof registerSchema>) => {
     setError("");
     setSuccess("");
     startTransition(() => {

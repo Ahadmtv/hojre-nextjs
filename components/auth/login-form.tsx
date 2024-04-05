@@ -18,7 +18,12 @@ import { Button } from '../ui/button'
 import FormError from '../form-error'
 import FormSuccess from '../form-success'
 import { login } from '@/actions/login'
+import { useSearchParams } from 'next/navigation'
+
 const LoginForm = () => {
+  const searchParams=useSearchParams();
+  const errorQuery=searchParams.get("error");
+  const authError=errorQuery==="OAuthAccountNotLinked"?"این ایمیل قبلا استفاده شده است":""
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -67,7 +72,7 @@ const LoginForm = () => {
               </FormItem>
             )
           }} />
-          <FormError message={error} />
+          <FormError message={error||authError} />
           <FormSuccess message={success} />
           <Button type={"submit"} className='w-full'>
             ورود
