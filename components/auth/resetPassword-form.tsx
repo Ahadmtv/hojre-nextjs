@@ -2,7 +2,7 @@
 import React, { useState, useTransition } from 'react'
 import CardWrapper from './card-wrapper'
 import { useForm } from 'react-hook-form'
-import { loginSchema } from '@/schema'
+import { resetPasswordSchema } from '@/schema'
 import * as  z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -17,29 +17,23 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import FormError from '../form-error'
 import FormSuccess from '../form-success'
-import { login } from '@/actions/login'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { resetPassword } from '@/actions/resetPassword'
 
-const LoginForm = () => {
-  const searchParams=useSearchParams();
-  const errorQuery=searchParams.get("error");
-  const authError=errorQuery==="OAuthAccountNotLinked"?"این ایمیل قبلا استفاده شده است":""
+const ResetPasswordForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof resetPasswordSchema>>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: "",
-      password: ""
+      email: ""
     }
   })
-  const handelSub = (values: z.infer<typeof loginSchema>) => {
+  const handelSub = (values: z.infer<typeof resetPasswordSchema>) => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values)
+      resetPassword(values)
       .then((data)=>{
         setError(data?.error);
         setSuccess(data?.success);
@@ -48,7 +42,7 @@ const LoginForm = () => {
 
   }
   return (
-    <CardWrapper headerTitle='ورود' headerDes='خوش آمدید' social={true} backButtonLabel='هنوز ثبت نام نکردی ؟' backButtonHref='/auth/register'>
+    <CardWrapper headerTitle='بازنشانی رمزعبور' headerDes='ایمیل خود را وارد کنید' backButtonLabel='بازگشت به صفحه ورود' backButtonHref='/auth/lohin'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handelSub)} className='space-y-6'>
           <FormField control={form.control} name={"email"} render={({ field }) => {
@@ -62,24 +56,10 @@ const LoginForm = () => {
               </FormItem>
             )
           }} />
-          <FormField control={form.control} name={"password"} render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>رمز عبور</FormLabel>
-                <FormControl>
-                  <Input placeholder="رمز عبور شما" {...field} type={'password'} disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }} />
-          <Button style={{marginTop:"4px", padding:0 }} variant="link" size={"lg"}>
-            <Link href="/auth/reset-password">فراموشی رمز عبور ؟</Link>
-          </Button>
-          <FormError message={error||authError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button type={"submit"} className='w-full'>
-            ورود
+            ارسال ایمیل بازنشانی
           </Button>
         </form>
       </Form>
@@ -87,4 +67,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default ResetPasswordForm

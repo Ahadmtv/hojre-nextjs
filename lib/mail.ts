@@ -35,5 +35,25 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   return info
 }
 
+export const sendResetPasswordEmail = async (email: string, token: string) => {
+  const link = `http://localhost:3000/auth/new-password?token=${token}`
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.NODEMAILER_EMAIL,
+      pass: process.env.NODEMAILER_PASSWORD
+    }
+  });
+
+  const mailOption = {
+    from: process.env.NODEMAILER_EMAIL,
+    to: email,
+    subject: "بازنشانی رمزعبور",
+    html: `<a href="${link}">اینجا کلیک کنید</a>`
+  }
+
+  const info = await transport.sendMail(mailOption);
+  return info
+}
 
 

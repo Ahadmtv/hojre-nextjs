@@ -1,6 +1,7 @@
 'use server'
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/hooks";
+import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/token";
 import { DEFAULT_REDIRECTED_ROUTE } from "@/routes";
 import { loginSchema } from "@/schema";
@@ -18,6 +19,10 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     }
     if(!existingUser.emailVerified){
         const verivicationToken= await generateVerificationToken(existingUser.email);
+        const info=await sendVerificationEmail(
+            verivicationToken.email,
+            verivicationToken.token
+        )
         return {error:"ایمیل خود را تایید نکردید"}
     }
     try {
