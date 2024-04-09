@@ -63,3 +63,35 @@ export const getResetTokenByToken=async(token:string)=>{
         return null;
     }
 }
+export const getTwoFactorTokenByEmail=async(email:string)=>{
+    try {
+        const twoFactorToken=await db.twoFactorToken.findFirst({
+            where:{email:email}
+        })
+        return twoFactorToken
+    } catch (error) {
+        return null;
+    }
+}
+
+export const getTwoFactorTokenByToken=async(token:string)=>{
+    try {
+        const twoFactorToken=await db.twoFactorToken.findUnique({
+            where:{token:token}
+        })
+        return twoFactorToken
+    } catch (error) {
+        return null;
+    }
+}
+
+export const getTwoFactorConfirmationByUid=async(uid:string)=>{
+    try {
+        const twoFactorConfirmation=await db.twoFactorConfirmation.findUnique({
+            where:{userId:uid}
+        })
+        return twoFactorConfirmation
+    } catch (error) {
+        return null;
+    }
+}

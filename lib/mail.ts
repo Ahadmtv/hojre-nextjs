@@ -56,4 +56,24 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
   return info
 }
 
+export const sendTwoFactorEmail = async (email: string, token: string) => {
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.NODEMAILER_EMAIL,
+      pass: process.env.NODEMAILER_PASSWORD
+    }
+  });
+
+  const mailOption = {
+    from: process.env.NODEMAILER_EMAIL,
+    to: email,
+    subject: "تایید دومرحله ای ",
+    html: `<p>کد تایید دومرحله ای : ${token}</p>`
+  }
+
+  const info = await transport.sendMail(mailOption);
+  return info
+}
+
 
