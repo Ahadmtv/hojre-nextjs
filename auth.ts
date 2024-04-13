@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import { db } from "./lib/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import authConfig from "./auth.config"
-import { getTwoFactorConfirmationByUid, getUserById } from "./hooks"
+import { getAccountById, getTwoFactorConfirmationByUid, getUserById } from "./hooks"
 import { UserRole } from "@prisma/client"
 
 
@@ -30,11 +30,11 @@ export const {
             if (account?.provider !== "credentials") return true;
             const existingUser = await getUserById(user.id);
             if (!existingUser?.emailVerified) return false;
-            if(existingUser.isTwoFactor){
-                const twoFactorconfirmation=await getTwoFactorConfirmationByUid(existingUser.id);
-                if(!twoFactorconfirmation) return false
+            if (existingUser.isTwoFactor) {
+                const twoFactorconfirmation = await getTwoFactorConfirmationByUid(existingUser.id);
+                if (!twoFactorconfirmation) return false
                 await db.twoFactorConfirmation.delete({
-                    where:{userId:existingUser.id}
+                    where: { userId: existingUser.id }
                 })
             }
             return true;
@@ -46,13 +46,26 @@ export const {
             if (token.role && session.user) {
                 session.user.role = token.role as UserRole;
             }
+            if (session.user) {
+                session.user.isTwoFactor = token.isTwoFactor as boolean;
+                session.user.name = token.name
+                session.user.isOauth=token.isOauth as boolean
+            }
+            if (session.user && token.email) {
+                session.user.email = token.email
+            }
             return session
         },
         async jwt({ token }) {
             if (!token.sub) return token
             const existingUser = await getUserById(token.sub);
             if (!existingUser) return token;
+            const existingAccount=await getAccountById(existingUser.id);
+            token.isOauth=!!existingAccount;
             token.role = existingUser.role;
+            token.isTwoFactor = existingUser.isTwoFactor
+            token.name = existingUser.name
+            token.email = existingUser.email
             return token
         }
     },

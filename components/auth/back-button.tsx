@@ -4,10 +4,13 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { BackButtonProps } from '@/types'
 
-const BackButton = ({label,href}:BackButtonProps) => {
+const BackButton = ({ label, href }: BackButtonProps) => {
   return (
     <Button variant={"link"} className='text-center'>
+      {href &&
         <Link href={href}>{label}</Link>
+      }
+
     </Button>
   )
 }

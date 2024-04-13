@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 
 
@@ -42,10 +43,10 @@ export const getTokenByToken = async (token: string) => {
         return null
     }
 }
-export const getResetTokenByEmail=async(email:string)=>{
+export const getResetTokenByEmail = async (email: string) => {
     try {
-        const resetToken=await db.resetPasswordToken.findFirst({
-            where:{email:email}
+        const resetToken = await db.resetPasswordToken.findFirst({
+            where: { email: email }
         })
         return resetToken
     } catch (error) {
@@ -53,20 +54,20 @@ export const getResetTokenByEmail=async(email:string)=>{
     }
 }
 
-export const getResetTokenByToken=async(token:string)=>{
+export const getResetTokenByToken = async (token: string) => {
     try {
-        const resetToken=await db.resetPasswordToken.findUnique({
-            where:{token:token}
+        const resetToken = await db.resetPasswordToken.findUnique({
+            where: { token: token }
         })
         return resetToken
     } catch (error) {
         return null;
     }
 }
-export const getTwoFactorTokenByEmail=async(email:string)=>{
+export const getTwoFactorTokenByEmail = async (email: string) => {
     try {
-        const twoFactorToken=await db.twoFactorToken.findFirst({
-            where:{email:email}
+        const twoFactorToken = await db.twoFactorToken.findFirst({
+            where: { email: email }
         })
         return twoFactorToken
     } catch (error) {
@@ -74,10 +75,10 @@ export const getTwoFactorTokenByEmail=async(email:string)=>{
     }
 }
 
-export const getTwoFactorTokenByToken=async(token:string)=>{
+export const getTwoFactorTokenByToken = async (token: string) => {
     try {
-        const twoFactorToken=await db.twoFactorToken.findUnique({
-            where:{token:token}
+        const twoFactorToken = await db.twoFactorToken.findUnique({
+            where: { token: token }
         })
         return twoFactorToken
     } catch (error) {
@@ -85,13 +86,25 @@ export const getTwoFactorTokenByToken=async(token:string)=>{
     }
 }
 
-export const getTwoFactorConfirmationByUid=async(uid:string)=>{
+export const getTwoFactorConfirmationByUid = async (uid: string) => {
     try {
-        const twoFactorConfirmation=await db.twoFactorConfirmation.findUnique({
-            where:{userId:uid}
+        const twoFactorConfirmation = await db.twoFactorConfirmation.findUnique({
+            where: { userId: uid }
         })
         return twoFactorConfirmation
     } catch (error) {
         return null;
     }
+}
+
+export const getAccountById = async (userId: string) => {
+    try {
+        const account = await db.account.findFirst({
+            where: { userId }
+        })
+        return account
+    } catch (error) {
+        return null
+    }
+
 }

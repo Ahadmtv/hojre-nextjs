@@ -9,6 +9,8 @@ import { loginSchema } from "@/schema";
 import { AuthError } from "next-auth";
 import * as z from "zod"
 export const login = async (values: z.infer<typeof loginSchema>) => {
+
+    //check form validation
     const validated = loginSchema.safeParse(values);
     if (!validated.success) {
         return { error: "مشکلی پیش آمده است " }
@@ -26,6 +28,8 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         )
         return { error: "ایمیل خود را تایید نکردید" }
     }
+
+    // two factor verification logic
     if (existingUser.isTwoFactor) {
         if (code) {
             const twoFactorToken = await getTwoFactorTokenByToken(code);
@@ -52,6 +56,8 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         return { twoFactor: true }
     }
 }
+
+//invoke sign in function at the end...
 try {
     await signIn("credentials", {
         email,

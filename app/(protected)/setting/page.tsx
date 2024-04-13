@@ -1,20 +1,14 @@
-import { auth, signOut } from '@/auth'
+"use client"
+
+import { logOut } from '@/actions/logout'
+import SettingForm from '@/components/auth/setting-form'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 import React from 'react'
 
-const page = async() => {
-   const session=await auth();
-  return (
-    <>
-  
-      <div>{JSON.stringify(session)}</div>
-      <form action={async () => {
-        "use server"
-        await signOut();
-      }}>
-        <button type='submit'>خروح</button>
-      </form>
-    </>
+const page = () => {
 
+  return (
+    <SettingForm />
   )
 }
 
