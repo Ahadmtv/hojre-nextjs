@@ -1,5 +1,5 @@
 import { UserRole } from "@prisma/client"
-import FormError from "../form-error"
+import FormError from "./form-error"
 
 interface RoleGateProps {
     allowedUser: UserRole|undefined,

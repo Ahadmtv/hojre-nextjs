@@ -1,5 +1,5 @@
 'use client'
-import UserInfo from '@/components/user-info'
+import UserInfo from '@/components/auth/user-info'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import React from 'react'
 

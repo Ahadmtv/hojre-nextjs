@@ -50,6 +50,10 @@ export const settingFormSchema = z.object({
     name: z.optional(z.string().min(3, {
         message: "نام حداقل باید سه حرف باشد"
     })),
+    address: z.optional(z.string().min(15, {
+        message: "آدرس حداقل باید 15 حرف باشد"
+    })),
+    postCode: z.optional(z.number().transform((val) => val !== undefined ? Number(val) : undefined)),
     email: z.optional(z.string().email({
         message: "ایمیل نامعتبر"
     })),
@@ -77,3 +81,21 @@ export const settingFormSchema = z.object({
         }
         return true
     }, { message: "رمز عبور جدیدی", path: ["password"] })
+
+
+
+export const userInfoSchema = z.object({
+    name: z.optional(z.string().min(3, {
+        message: "نام حداقل باید سه حرف باشد"
+    })),
+    address: z.optional(z.string().min(15, {
+        message: "آدرس حداقل باید 15 حرف باشد"
+    })),
+    postCode: z.optional(z.number().transform((val) => val !== undefined ? Number(val) : undefined)),
+    email: z.optional(z.string().email({
+        message: "ایمیل نامعتبر"
+    })),
+    role: z.optional(z.enum([UserRole.ADMIN, UserRole.USER])),
+    isTwoFactor: z.optional(z.boolean()),
+    password: asOptionalField(z.string().min(6, { message: 'حداقل 6 رقم ' }).optional()),
+})

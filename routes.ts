@@ -1,5 +1,9 @@
 export const PUBLIC_ROUTES=[
     "/",
+    "/shop",
+    "/contact",
+    "/blogs",
+    "/about",
     "/auth/new-verification"
 ]
 export const AUTH_ROUTES=[
@@ -11,5 +15,6 @@ export const AUTH_ROUTES=[
 ]
 export const DEFAULT_REDIRECTED_ROUTE="/setting"
 
+export const ADMIN_ROUTE="/admin"
 
 export const PREFIX_ROUTE="/api/auth"

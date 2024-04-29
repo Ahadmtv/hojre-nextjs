@@ -21,7 +21,7 @@ const CardWrapper = ({
     social
 }: CardWrapperProps) => {
     return (
-        <Card className="w-[400px] font-vazir">
+        <Card className="font-vazir">
             <CardHeader>
                 <CardTitle className='text-center'>{headerTitle}</CardTitle>
                 <CardDescription className='text-center'>{headerDes}</CardDescription>

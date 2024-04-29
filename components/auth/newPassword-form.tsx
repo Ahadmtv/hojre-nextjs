@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import FormError from '../form-error'
-import FormSuccess from '../form-success'
+import FormError from './form-error'
+import FormSuccess from './form-success'
 import { useSearchParams } from 'next/navigation'
 import { NewPassword } from '@/actions/new-password'
 

@@ -1,5 +1,5 @@
 import { auth } from '@/auth'
-import UserInfo from '@/components/user-info';
+import UserInfo from '@/components/auth/user-info';
 import { getUserBySession } from '@/lib/auth'
 import React from 'react'
 

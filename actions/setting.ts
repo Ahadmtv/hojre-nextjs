@@ -10,7 +10,7 @@ import bcrypt from "bcryptjs"
 import * as z from "zod"
 export const setting = async (values: z.infer<typeof settingFormSchema>) => {
     const validated = settingFormSchema.safeParse(values);
-    if (!validated.success) return { error: "مشکلی پیش آمده است " }
+    if (!validated.success) return { error: "فرم تایید نشد " }
     const user = await getUserBySession();
     if (!user) return { error: "کاربر وجود ندارد" }
     const dbuser = await getUserById(user.id)
@@ -25,7 +25,7 @@ export const setting = async (values: z.infer<typeof settingFormSchema>) => {
         const checkEmail = await getUserByEmail(values.email);
         if (checkEmail) return { error: "ایمیل قبلا ثبت شده است" };
         const token = await generateVerificationToken(values.email);
-        if (!token) return { error: "مشکلی پیش آمده است" }
+        if (!token) return { error: " مشکلی پیش آمده است" }
         const info = await sendVerificationEmail(
             token.email,
             token.token
@@ -39,7 +39,7 @@ export const setting = async (values: z.infer<typeof settingFormSchema>) => {
         })
         return { success: "ایمیل تایید برای شما ارسال شد" }
     }
-    const existingUser = await getUserByEmail(values.email);
+    const existingUser = await getUserById(user.id);
     if (!existingUser) return { error: "کاربر با این مشخصات ثبت نشده است" }
     if (values.password && values.newPassword && values.password !== values.newPassword && existingUser.password) {
         if (!existingUser) return { error: "مشکلی پیش آمده است " }

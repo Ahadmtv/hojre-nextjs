@@ -15,11 +15,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import FormError from '../form-error'
-import FormSuccess from '../form-success'
+import FormError from './form-error'
+import FormSuccess from './form-success'
 import { login } from '@/actions/login'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { setGlobalIsLoading } from '@/redux/product-slice'
 
 const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -29,6 +31,7 @@ const LoginForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [twoFactor, setTwoFactor] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -39,18 +42,32 @@ const LoginForm = () => {
   const handelSub = (values: z.infer<typeof loginSchema>) => {
     setError("");
     setSuccess("");
+    dispatch(setGlobalIsLoading(true));
     startTransition(() => {
       login(values)
         .then((data) => {
           if (data.error) {
             setError(data.error)
+            dispatch(setGlobalIsLoading(false));
+          } else {
+            dispatch(setGlobalIsLoading(false));
           }
           if (data.success) {
             setSuccess(data.success)
+            dispatch(setGlobalIsLoading(false));
+          } else {
+            dispatch(setGlobalIsLoading(false));
           }
           if (data.twoFactor) {
             setTwoFactor(data?.twoFactor)
+            dispatch(setGlobalIsLoading(false));
+          } else {
+            dispatch(setGlobalIsLoading(false));
           }
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch(setGlobalIsLoading(false));
         })
     })
 
@@ -65,7 +82,7 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>کد فعالسازی</FormLabel>
                   <FormControl>
-                    <Input placeholder="کد فعالسازی" {...field}  disabled={isPending} />
+                    <Input placeholder="کد فعالسازی" {...field} disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

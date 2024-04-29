@@ -49,6 +49,8 @@ export const {
             if (session.user) {
                 session.user.isTwoFactor = token.isTwoFactor as boolean;
                 session.user.name = token.name
+                session.user.address = token.address as string
+                session.user.postCode = token.postCode as number
                 session.user.isOauth=token.isOauth as boolean
             }
             if (session.user && token.email) {
@@ -66,6 +68,8 @@ export const {
             token.isTwoFactor = existingUser.isTwoFactor
             token.name = existingUser.name
             token.email = existingUser.email
+            token.address=existingUser.address
+            token.postCode=existingUser.postCode
             return token
         }
     },

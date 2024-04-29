@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, CardContent, CardHeader } from './ui/card'
+import { Card, CardContent, CardHeader } from '../ui/card'
 import { ExtendedUser } from '@/next-auth'
-import { Badge } from './ui/badge'
+import { Badge } from '../ui/badge'
 
 interface UserInfoProps {
     user?: ExtendedUser,

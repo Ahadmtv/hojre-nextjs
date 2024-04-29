@@ -80,50 +80,141 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+  html {
+    direction: rtl;
+    box-sizing: border-box;
+    font-family: vazir;
+}
+
+.btn-auth {
+    @apply text-base bg-amber-300 border px-3 py-2 rounded-lg hover:bg-amber-400 transition;
+}
+
+.menu-item {
+    @apply text-center text-lg bg-amber-300 border hover:bg-amber-400 transition;
+}
+
+#background {
+    background-image: url(../public/assets/images/bg-img/06.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
+
+.background-product {
+    background-image: url(../public/assets/images/shape-img/01.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+}
+
+.background-register-home {
+    background-image: url(../public/assets/images/bg-img/07.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+}
+
+.background-person-map {
+    background-image: url(../public/assets/images/clients/avater.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.shap-animation {
+    animation: outer-ripple 15s infinite;
+}
+
+.header-secondry {
+    background-image: url(../public/assets/images/pageheader/bg/01.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60vh;
+}
+
+.my-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.product-slide-active {
+    @apply absolute w-full h-full backdrop-blur-md top-0 right-0 flex justify-center items-center duration-200 ease-linear  origin-center opacity-100;
+}
+
+.product-slide {
+    @apply absolute  w-full h-full backdrop-blur-md top-0 right-0 flex justify-center items-center duration-200 ease-linear origin-center opacity-0;
+}
+
+/* مشخص کردن کلاس برای شبکه های اجتماعی */
+.instagram {
+    background-color: #e4405f;
+}
+
+.facebook {
+    background-color: #3b5998;
+}
+
+.linkedin {
+    background-color: #007bb5;
+}
+
+.pinterest {
+    background-color: #bd081c;
+}
+
+.twitter {
+    background-color: #55acee;
+}
+
 }
 /* اضافه کردن فونت به پروژه */
 
 @font-face {
   font-family: 'vazir-bold';
-  src: url('../public/font/Vazir.ttf') format('truetype'),
-      url('../public/font/Vazir-Bold.woff') format('woff'),
-      url('../public/font/Vazir-Bold.woff2') format('woff2'),
-      url('../public/font/Vazir-Bold.eot') format('eot');
+  src: url('../public/assets/font/Vazir-Bold.ttf') format('truetype'),
+      url('../public/assets/font/Vazir-Bold.woff') format('woff'),
+      url('../public/assets/font/Vazir-Bold.woff2') format('woff2'),
+      url('../public/assets/font/Vazir-Bold.eot') format('eot');
   ;
 }
 
 @font-face {
   font-family: 'vazir-light';
-  src: url('../public/font/Vazir-Light.ttf') format('truetype'),
-      url('../public/font/Vazir-Light.woff') format('woff'),
-      url('../public/font/Vazir-Light.woff2') format('woff2'),
-      url('../public/font/Vazir-Light.eot') format('eot');
+  src: url('../public/assets/font/Vazir-Light.ttf') format('truetype'),
+      url('../public/assets/font/Vazir-Light.woff') format('woff'),
+      url('../public/assets/font/Vazir-Light.woff2') format('woff2'),
+      url('../public/assets/font/Vazir-Light.eot') format('eot');
   ;
 }
 
 @font-face {
   font-family: 'vazir-medium';
-  src: url('../public/font/Vazir-Medium.ttf') format('truetype'),
-      url('../public/font/Vazir-Medium.woff') format('woff'),
-      url('../public/font/Vazir-Medium.woff2') format('woff2'),
-      url('../public/font/Vazir-Medium.eot') format('eot');
+  src: url('../public/assets/font/Vazir-Medium.ttf') format('truetype'),
+      url('../public/assets/font/Vazir-Medium.woff') format('woff'),
+      url('../public/assets/font/Vazir-Medium.woff2') format('woff2'),
+      url('../public/assets/font/Vazir-Medium.eot') format('eot');
   ;
 }
 
 @font-face {
   font-family: 'vazir-thin';
-  src: url('../public/font/Vazir-Thin.ttf') format('truetype'),
-      url('../public/font/Vazir-Thin.woff') format('woff'),
-      url('../public/font/Vazir-Thin.woff2') format('woff2'),
-      url('../public/font/Vazir-Thin.eot') format('eot');
+  src: url('../public/assets/font/Vazir-Thin.ttf') format('truetype'),
+      url('../public/assets/font/Vazir-Thin.woff') format('woff'),
+      url('../public/assets/font/Vazir-Thin.woff2') format('woff2'),
+      url('../public/assets/font/Vazir-Thin.eot') format('eot');
   ;
 }
 
 @font-face {
   font-family: 'vazir';
-  src: url('../public/font/Vazir.ttf') format('truetype'),
-      url('../public/font/Vazir.woff') format('woff'),
-      url('../public/font/Vazir.woff2') format('woff2'),
-      url('../public/font/Vazir.eot') format('eot');
+  src: url('../public/assets/font/Vazir.ttf') format('truetype'),
+      url('../public/assets/font/Vazir.woff') format('woff'),
+      url('../public/assets/font/Vazir.woff2') format('woff2'),
+      url('../public/assets/font/Vazir.eot') format('eot');
   ;
 }
